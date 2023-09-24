@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Models\Section;
 use Illuminate\Http\Request;
@@ -15,8 +16,8 @@ class ProductsController extends Controller
     public function index()
     {
         return view('admin.products.index', [
-           'products' => Product::all(),
-           'sections'=>Section::all(),
+            'products' => Product::all(),
+            'sections' => Section::all(),
         ]);
     }
 
@@ -46,7 +47,7 @@ class ProductsController extends Controller
         Product::create([
             'name' => $request->name,
             'description' => $request->description,
-            'section_id'=>$request->section_id,
+            'section_id' => $request->section_id,
         ]);
         return redirect()->route('products.index')->with('Add', 'تم التسجيل بنجاح');
     }
@@ -73,6 +74,7 @@ class ProductsController extends Controller
     public function update(Request $request)
     {
         $id = $request->id;
+
         $request->validate([
             'name' => 'required|unique:products|max:255'.$id,
             'description' => 'required',
@@ -81,20 +83,25 @@ class ProductsController extends Controller
             'name.unique' => 'اسم المنتج المدخل موجود مسبقا',
             'description.required' => 'يرجى ادخال الملاحظات ',
         ]);
-        $products = Product::findorfail($id);
+
+        $products = Product::findOrFail($id);
         $products->update([
             'name' => $request->name,
             'description' => $request->description,
-            'section_id'=>$request->section_id,
+            'section_id' => $request->section_id,
         ]);
-        return redirect()->route('products.index')->with('Add', 'تم التسجيل بنجاح');
+        return redirect()->route('products.index')->with('Add', 'تم التعديل بنجاح');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+       $id = $request->id;
+       $product = Product::findorfail($id);
+       $product->delete();
+       return redirect()->route('products.index')->with('delete', 'تم الحذف بنجاح');
+
     }
 }

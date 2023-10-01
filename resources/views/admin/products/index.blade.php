@@ -133,7 +133,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description" class="col-form-label">ملاحظات:</label>
-                            <textarea class="form-control" id="description" name="description" rows="3">{{ old('description', $product->description) }}</textarea>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                         </div>
 
                         <div class="modal-footer">
@@ -164,8 +164,7 @@
                         <div class="form-group">
                             <input type="hidden" name="id" id="id" value="">
                             <label for="recipient-name" class="col-form-label">اسم المنتج:</label>
-                            <input class="form-control" name="name" id="name" type="text"
-                                value="{{ 'name', $product->name }}">
+                            <input class="form-control" name="name" id="name" type="text">
                         </div>
                         <div class="form-group">
                             <label for="section_id">الاقسام</label>
@@ -181,7 +180,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="col-form-label">ملاحظات:</label>
-                            <textarea class="form-control" id="description" name="description" rows="3">{{ old('description', $product->description) }}</textarea>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">تاكيد</button>
@@ -257,10 +256,12 @@
         var id = button.data('id')
         var name = button.data('name')
         var section_id = button.data('section_id')
+        var description = button.data('description')
         var modal = $(this)
         modal.find('.modal-body #id').val(id);
         modal.find('.modal-body #name').val(name);
         modal.find('.modal-body #section_id').val(section_id);
+        modal.find('.modal-body #description').val(description);
     })
 </script>
 

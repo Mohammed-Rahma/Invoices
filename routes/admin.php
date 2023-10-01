@@ -13,4 +13,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('admin/invoices' , InvoicesController::class);
     Route::resource('admin/sections' , SectionsController::class);
     Route::resource('admin/products' , ProductsController::class);
+    Route::get('/section/{id}',[InvoicesController::class , 'getproducts']);
 });

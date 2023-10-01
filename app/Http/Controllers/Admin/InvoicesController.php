@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InvoicesController extends Controller
 {
@@ -14,11 +16,12 @@ class InvoicesController extends Controller
     public function index()
     {
         $invoices = Invoice::all();
-        return view('admin.invoices.index',
-             [
-                'invoices'=>$invoices,
-             ]
-         );
+        return view(
+            'admin.invoices.index',
+            [
+                'invoices' => $invoices,
+            ]
+        );
     }
 
     /**
@@ -26,7 +29,10 @@ class InvoicesController extends Controller
      */
     public function create()
     {
-        //
+        $sections = Section::all();
+        return view('admin.invoices.create', [
+            'sections' => $sections
+        ]);
     }
 
     /**
@@ -67,5 +73,11 @@ class InvoicesController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getproducts($id)
+    {
+        $products = DB::table("products")->where("section_id", '=' , $id)->pluck('name' ,'id');
+        return json_encode($products);
     }
 }
